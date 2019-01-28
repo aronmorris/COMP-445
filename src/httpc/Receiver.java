@@ -24,6 +24,7 @@ public class Receiver implements EventLauncher {
 		synchronized(MUTEX) {
 			if (!listeners.contains(el)) {
 				listeners.add(el);
+				el.setEventLauncher(this);
 			}
 		}
 		

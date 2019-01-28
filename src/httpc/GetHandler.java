@@ -15,6 +15,7 @@ public class GetHandler extends Handler {
 			return;
 		}
 		
+		System.out.println("GET request");
 		//TODO "GET" handling logic
 		
 	}

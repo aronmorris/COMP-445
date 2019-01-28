@@ -16,6 +16,7 @@ public class PostHandler extends Handler {
 			return;
 		}
 		
+		System.out.println("POST request");
 		//TODO "POST" handling logic
 		
 	}
