@@ -6,7 +6,7 @@ import java.util.List;
 public class Receiver implements EventLauncher {
 
 	private List<EventListener> listeners;
-	private String message;
+	private String[] args;
 	private boolean changed;
 	
 	private final Object MUTEX = new Object();
@@ -60,13 +60,13 @@ public class Receiver implements EventLauncher {
 	@Override
 	public Object getUpdate(EventListener el) {
 		
-		return this.message;
+		return this.args;
 		
 	}
 
-	public void sendMessage(String msg) {
+	public void sendMessage(String[] msg) {
 		
-		this.message = msg;
+		this.args = msg;
 		
 		this.changed = true;
 		

@@ -5,20 +5,20 @@ public class Handler implements EventListener {
 	private String name;
 	private EventLauncher receiver;
 	
+	protected boolean isEmpty = false;
+	protected String[] args;
+	
 	public Handler(String name) {
 		this.name = name;
 	}
 	
 	@Override
 	public void update() {
-		String msg = (String) receiver.getUpdate(this);
+		args = (String[]) receiver.getUpdate(this);
 		
-		if (msg == null) {
-			return;
-		}
-		
-		else {
-			//TODO handler logic for get/post, etc, see assignment documentation
+		//if httpc called with no arguments, don't do anything
+		if (args == null || args.length == 0) {
+			this.isEmpty = true;
 		}
 		
 	}
