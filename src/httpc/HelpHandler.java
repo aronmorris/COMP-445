@@ -2,8 +2,6 @@ package httpc;
 
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -18,6 +16,20 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+/** 
+ * @author aronmorris
+ *
+ * The HelpHandler class fires whenever the argument "help" is given to httpc.
+ * When constructed, the handler acquires the help.xml file and creates an 
+ * xpath for references to that file.
+ * 
+ * On update(), the handler checks that "help" is the command given, then prints
+ * the desired help information by querying the xml file with the appropriate
+ * parameter. No match means the default text.
+ * 
+ * This system means that this Handler need never be updated with new commands;
+ * they can be added exclusively to help.xml
+ */
 public class HelpHandler extends Handler {
 
 	private static final String HELP_FILE="help.xml";
@@ -35,6 +47,7 @@ public class HelpHandler extends Handler {
 		
 		DocumentBuilder builder;
 		
+		//establish help document and querying system to it
 		try {
 			
 			builder = fac.newDocumentBuilder();
@@ -53,10 +66,10 @@ public class HelpHandler extends Handler {
 	
 	@Override
 	public void update() {
-		//TODO prints the help texts from help.json
 		
 		super.update();
 		
+		//dont do anything unless it's the right argument
 		if (this.isEmpty || !this.args[0].equalsIgnoreCase("HELP")) {
 			return;
 		}
@@ -68,7 +81,8 @@ public class HelpHandler extends Handler {
 	private void printHelp(String[] keys) {
 		
 		try {
-		
+			//the key is the node called in the xml document
+			//default to help if there is no specific call
 			String key = keys.length == 1 ? "help" : keys[1];
 			
 			System.out.println(parseHelp(key));
@@ -79,8 +93,15 @@ public class HelpHandler extends Handler {
 		
 	}
 	
+	/** 
+	 * @param key The node the class will query for data
+	 * @return the string containing the particular helptext
+	 * @throws XPathExpressionException
+	 */
 	private String parseHelp(String key) throws XPathExpressionException{
 		
+		//insert the node key into the query
+		//if none exists, nothing gets printed
 		XPathExpression expr = xpath.compile("/root/" + key + "/line/text()");
 		
 		StringBuilder sb = new StringBuilder();

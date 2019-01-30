@@ -3,6 +3,16 @@ package httpc;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 
+ * @author aronmorris
+ * 
+ * Standard race-safe Observable re: Observer pattern. Fires an event to all listening
+ * Handlers when it registers a command from main class httpc.
+ * 
+ * Implements registration, deregistration, updating, of listening handlers
+ *
+ */
 public class Receiver implements EventLauncher {
 
 	private List<EventListener> listeners;
