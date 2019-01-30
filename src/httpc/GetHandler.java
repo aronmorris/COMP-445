@@ -1,9 +1,14 @@
 package httpc;
 
+import java.net.HttpURLConnection;
+
 public class GetHandler extends Handler {
 
 	public GetHandler(String name) {
 		super(name);
+
+		
+		
 	}
 	
 	@Override

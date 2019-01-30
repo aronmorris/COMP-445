@@ -1,5 +1,7 @@
 package httpc;
 
+import java.net.HttpURLConnection;
+
 public class Handler implements EventListener {
 
 	private String name;
@@ -7,9 +9,11 @@ public class Handler implements EventListener {
 	
 	protected boolean isEmpty = false;
 	protected String[] args;
+	protected HttpURLConnection htc;
 	
 	public Handler(String name) {
 		this.name = name;
+		
 	}
 	
 	@Override
