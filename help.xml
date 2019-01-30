@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<root>
+	<help>
+		<line>httpc help</line>
+		<line>httpc is a curl-like application but supports HTTP protocol only.</line>
+		<line>Usage: </line>
+		<line>httpc command [arguments]</line>
+		<line>The commands are:</line>
+		<line>    get     executes a HTTP GET request and prints the response.</line>
+		<line>    post    executes a HTTP POST request and prints the response.</line>
+		<line>    help    prints this screen.</line>
+		<line>Use 'httpc help [command]' for more information about a command.</line>
+	</help>
+	<get>
+		<line>httpc help get</line>
+		<line>usage: httpc get [-v] [-h key:value] URL</line>
+		<line>Get executes a HTTP GET request for a given URL.</line>
+		<line>-v Prints the detail of the response such as protocol, status, and headers.</line>
+		<line>-h key:value Associates headers to HTTP Request with the format 'key:value'.</line>
+	</get>
+	<post>
+		<line>httpc help post</line>
+		<line>usage: httpc post [-v] [-h key:value] [-d inline-data] [-f file] URL</line>
+		<line>Post executes a HTTP POST request for a given URL with inline data or from file.</line>
+		<line>-v Prints the detail of the response such as protocol, status, and headers.</line>
+		<line>-h key:value Associates headers to HTTP Request with the format 'key:value'.</line>
+		<line>-d string Associates an inline data to the body HTTP POST request.</line>
+		<line>-f file Associates the content of a file to the body HTTP POST request.</line>
+		<line>Either [-d] or [-f] can be used but not both.</line>
+	</post>
+</root>

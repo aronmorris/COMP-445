@@ -12,7 +12,8 @@ public class PostHandler extends Handler {
 		
 		super.update();
 		
-		if (this.isEmpty || this.args[0].equalsIgnoreCase("GET")) {
+		//only start handling if this is the argument we want
+		if (this.isEmpty || !this.args[0].equalsIgnoreCase("POST")) {
 			return;
 		}
 		

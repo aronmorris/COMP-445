@@ -1,6 +1,6 @@
 package httpc;
 
-public class httpcMain {
+public class httpc {
 
 	private static Receiver receiver;
 	
@@ -17,8 +17,8 @@ public class httpcMain {
 		Receiver inputReceiver = new Receiver();
 		
 		inputReceiver.register(new PostHandler("PostHandler"));
-		
 		inputReceiver.register(new GetHandler("GetHandler"));
+		inputReceiver.register(new HelpHandler("HelpHandler"));
 		
 		receiver = inputReceiver;
 		
