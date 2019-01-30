@@ -20,7 +20,6 @@ public class Handler implements EventListener {
 	
 	protected boolean isEmpty = false;
 	protected String[] args;
-	protected HttpURLConnection htc;
 	
 	public Handler(String name) {
 		this.name = name;
