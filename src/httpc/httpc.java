@@ -16,9 +16,9 @@ public class httpc {
 		
 		Receiver inputReceiver = new Receiver();
 		
-		inputReceiver.register(new PostHandler("PostHandler"));
-		inputReceiver.register(new GetHandler("GetHandler"));
-		inputReceiver.register(new HelpHandler("HelpHandler"));
+		inputReceiver.register(new PostHandler("post"));
+		inputReceiver.register(new GetHandler("get"));
+		inputReceiver.register(new HelpHandler("help"));
 		
 		receiver = inputReceiver;
 		

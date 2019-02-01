@@ -15,7 +15,7 @@ import java.net.HttpURLConnection;
  */
 public class Handler implements EventListener {
 
-	private String name;
+	protected String name;
 	private EventLauncher receiver;
 	
 	protected boolean isEmpty = false;
