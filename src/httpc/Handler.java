@@ -20,6 +20,8 @@ public class Handler implements EventListener {
 	
 	protected boolean isEmpty = false;
 	protected String[] args;
+
+	protected final String USER_AGENT = "Mozilla/5.0";
 	
 	public Handler(String name) {
 		this.name = name;

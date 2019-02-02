@@ -7,7 +7,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -58,17 +57,19 @@ public class GetHandler extends Handler {
 
 	private void handleFlags(String[] args) {
 
-		for (int i = 0; i < args.length; i++) {
+		for (String s : args) {
 
-			//VERBOSE OPTION
-			switch (args[i]) {
+		    switch (s) {
 
+                //VERBOSE OPTION
 				case "-v":
 					verbose = true;
-
+					break;
+				//HEADERS ATTACHED
 				case "-h":
-					generateHeaders(args);
-
+					addProperties = HeaderHelper.generateHeaders(args);
+					properties = true;
+					break;
 				default:
 					continue;
 			}
@@ -92,77 +93,49 @@ public class GetHandler extends Handler {
 				con.setRequestProperty(key, addProperties.get(key));
 
 			}
+
 		}
 
 		con.setRequestMethod("GET");
+
+		con.setRequestProperty("User-Agent", super.USER_AGENT);
 
 		responseCode = con.getResponseCode();
 
 		if (verbose) {
 
-			printHTTPHeaders(con);
+			HeaderHelper.printHTTPHeaders(con);
 
 		}
 
+		/**
+		 * This part prints the reply from the server
+		 */
 		if (responseCode == HttpURLConnection.HTTP_OK) {
 
 			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 
-				while(in.readLine() != null) {
+			String input;
 
-					System.out.println(in.readLine());
+			StringBuffer response = new StringBuffer();
 
-				}
+			while ((input = in.readLine()) != null) {
 
-				in.close();
-
-		}
-
-	}
-
-	//Acquires headers from the program arguments and puts them in a map for later
-	private void generateHeaders(String[] args) {
-
-		String key, value;
-
-		addProperties = new HashMap<String, String>();
-
-		//exclude final arg which contains " : " as part of url http://etc.tld
-		for (int i = 0; i < args.length - 1; i++) {
-
-			if (args[i].contains(":")) {
-
-				key = args[i].substring(0, args[i].indexOf(':'));
-
-				value = args[i].substring(args[i].indexOf(':') + 1, args[i].length());
-
-				addProperties.put(key, value);
-
+				response.append(input + "\n");
 			}
+			in.close();
+			System.out.println(response.toString());
 
 		}
 
-		if (!addProperties.isEmpty()) {
+		else {
 
-			properties = true;
+			System.out.println("Error " + con.getResponseCode());
 
 		}
 
 	}
 
-	//acquires the headers received from the request and prints to console
-	private void printHTTPHeaders(HttpURLConnection con) {
 
-		Map<String, List<String>> headers = con.getHeaderFields();
-
-		for (Map.Entry<String, List<String>> entry : headers.entrySet()) {
-
-			System.out.println(entry.getKey() + ": " + entry.getValue());
-
-		}
-
-		System.out.println();
-
-	}
 
 }
