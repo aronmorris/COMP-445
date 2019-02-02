@@ -7,8 +7,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Map;
 
 public class PostHandler extends Handler {
@@ -22,15 +22,17 @@ public class PostHandler extends Handler {
 	private URL url;
 	private HttpURLConnection con;
 	private String inlineData;
-
+	private byte[] encodedFile;
 
 
 	public PostHandler(String name) {
 		super(name);
 
 		verbose = false;
+		fileData = false;
 
 		inlineData = null;
+
 
 	}
 	
@@ -52,7 +54,12 @@ public class PostHandler extends Handler {
 		try {
 			sendPOSTRequest();
 
-			HeaderHelper.printHTTPHeaders(con);
+
+			if (verbose) {
+
+				HeaderHelper.printHTTPHeaders(con);
+
+			}
 
 			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 
@@ -65,6 +72,7 @@ public class PostHandler extends Handler {
 				response.append(input + "\n");
 			}
 			in.close();
+
 			System.out.println(response.toString());
 
 		} catch (IOException e) {
@@ -91,7 +99,7 @@ public class PostHandler extends Handler {
 					fileSelected = true; //set to true after using it so one can only use the one option of two
 					break;
 				case "-f":
-					associateFileData(args);
+					associateFileData(args, i);
 					fileSelected = true;
 					break;
 			}
@@ -123,7 +131,7 @@ public class PostHandler extends Handler {
 
 		else if (fileData) {
 
-			//TODO get filepath from args, write file contents to byte output
+			writer.writeBytes(encodedFile.toString());
 
 		}
 
@@ -168,10 +176,23 @@ public class PostHandler extends Handler {
 	}
 
 
-	private void associateFileData(String[] args) {
+	private void associateFileData(String[] args, int findex) {
 
-		if (fileSelected) { //if this is true, the other flag has been used and this one is disallowed
+		if (fileSelected || findex == args.length - 1) { //if this is true, the other flag has been used and this one is disallowed || there is no file path
 			return;
+		}
+
+		String path = args[findex + 1];
+		encodedFile = null;
+
+		try {
+
+			encodedFile = Files.readAllBytes(Paths.get(path));
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			fileData = true;
 		}
 
 	}
