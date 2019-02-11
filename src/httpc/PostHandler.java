@@ -150,7 +150,7 @@ public class PostHandler extends Handler {
 		int end = -1;
 
 		StringBuilder sb = new StringBuilder();
-
+		/*
 		//start iterating after the discovery point of the flag, and find out what the start and end indices are
 		for (int j = index + 1; j < args.length; j++) {
 
@@ -164,12 +164,12 @@ public class PostHandler extends Handler {
 			}
 
 		}
+		*/
+		
+		//All of the above unecessary for properly formatted data - commented out
+		sb.append(args[index + 1]);
 
-		for (int i = start; i <= end; i++) {
-
-			sb.append(args[i]);
-
-		}
+		
 
 		inlineData = sb.toString().replace("'", "");
 
